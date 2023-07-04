@@ -1,9 +1,12 @@
-/* This file contains queries to practice CASCADING IN SQL
-includes queries to :
+/* Last ran on MYSQL Workbench 8.0 on 04/07/2023
+Author: Roopmathi Gunna 
+This file contains queries to practice CASCADING IN SQL. Queries include :
+
 Add ON DELETE CASCADE constraint
 ADD ON UPDATE CASCADE constraint
-validate deletion 
-validate updation 
+Validate deletion 
+Validate updation
+master table creation
 */
 CREATE DATABASE DEMO_SYNTAX ;
 USE  DEMO_SYNTAX;
@@ -35,6 +38,8 @@ amount float NOT NULL,
 payment_date date NOT NULL,
 FOREIGN KEY (emp_id) REFERENCES Employee (emp_id) ON DELETE CASCADE
 );
+
+-- Insert values into the Payment table
 INSERT INTO Payment (payment_id, emp_id, amount, payment_date) VALUES
 (301, 101, 1200, '2015-09-15'),
 (302, 101, 1200, '2015-09-30'),
@@ -43,10 +48,9 @@ INSERT INTO Payment (payment_id, emp_id, amount, payment_date) VALUES
 (305, 102, 1800, '2015-09-15'),
 (306, 102, 1800, '2015-09-30');
 
-SELECT * FROM payment;
-
 /* Validating Deletion ON CASCADE */
 DELETE FROM Employee WHERE emp_id = 102;
+SELECT * FROM Payment;
 
 /*How to find the affected table by ON DELETE CASCADE action? */
 USE information_schema;
@@ -69,7 +73,7 @@ will automatically reflect this change in the child table. */
 UPDATE Employee SET emp_id = 108 WHERE emp_id = 103;
 SELECT * FROM Employee;
 
--- Create master table that joins the employee and payment tables
+-- Create Master table that joins the employee and payment tables
 DROP TABLE RG_MASTER_EMP_CASCADE;
 CREATE TABLE IF NOT EXISTS RG_MASTER_EMP_CASCADE AS 
 SELECT E.emp_id,
